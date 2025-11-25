@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "home": "Home",
+    "experience": "Experience",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+
+  "hero": {
+    "hello": "Hello! I'm",
+    "name": "Álvaro Prado",
+    "role": "Frontend Developer",
+    "typedPhrases": [
+      "I design modern web interfaces.",
+      "I create thoughtful digital experiences.",
+      "I work with Vue.js, TypeScript & Tailwind CSS."
+    ],
+    "descriptionShort": "I design and build modern web interfaces with clean UI and smooth UX.",
+    "descriptionAlt": "I enjoy creating delightful products that balance business goals with user needs.",
+    "cta": "Download CV",
+    "scroll": "Scroll to my experience"
+  },
+
+  "experience": {
+    "title": "Work Experience",
+    "items": [
+      {
+        "logo": "/src/assets/logos/umatec.png",
+
+        "company": "UMATEC · Client: Netzun",
+        "role": "Web Developer / Email & Landing Page Markup",
+        "period": "Jun 2023 – Jul 2024 · Lima, Peru · Hybrid",
+        "highlights": [
+          "Full-time assignment to Netzun (via UMATEC) building responsive emails and landing pages.",
+          "Creation of reusable templates and components with a focus on accessibility and cross-client support.",
+          "Integration with AWS services and version control using Git."
+        ],
+        "cta": "View details"
+      },
+      {
+        "icon": "🧩",
+        "company": "Personal Projects",
+        "role": "Frontend Developer",
+        "period": "Ongoing · Remote",
+        "highlights": [
+          "Development of SPA projects with Vue 3, Angular and TypeScript.",
+          "Practice of good UI patterns, responsive design and component-based architectures.",
+          "Continuous learning through side projects and experimentation with new tools."
+        ],
+        "cta": "See projects"
+      }
+    ]
+  },
+
+  "projects": {
+    "title": "Featured Projects",
+    "label": "Featured Project",
+    "items": [
+      {
+        "slug": "andeswarmi",
+        "title": "AndesWarmi",
+        "subtitle": "E-commerce for Traditional Peruvian Clothing",
+        "description": "E-commerce platform for AndesWarmi, a brand specializing in traditional Peruvian clothing and accessories. Features product catalog, shopping cart, and secure checkout.",
+        "role": "Vue 3 · TypeScript · Tailwind CSS · Firebase",
+        "level": "Intermediate",
+        "tags": ["Vue 3", "TypeScript", "Tailwind CSS", "Firebase"],
+        "link": "https://github.com/frontsitoz/andeswarmi"
+      },
+      {
+        "slug": "countries-app",
+        "title": "Countries App",
+        "subtitle": "REST Countries Explorer",
+        "description": "Frontend Mentor challenge using the REST Countries API: dark mode, search, filters by region and detailed country view.",
+        "role": "Vue 3 · TypeScript · REST API",
+        "level": "Intermediate",
+        "tags": ["Vue 3", "TypeScript", "REST API"],
+        "link": "https://github.com/frontsitoz/rest-countries-api-vue"
+      },
+      {
+        "slug": "pokemon-game",
+        "title": "Pokémon Game",
+        "subtitle": "Guess-the-Pokémon Challenge",
+        "description": "Mini-game that consumes a Pokémon API where the user has to guess the correct Pokémon from different options.",
+        "role": "Vue 3 · Composition API",
+        "level": "Practice",
+        "tags": ["Vue 3", "Game", "API"],
+        "link": "https://github.com/frontsitoz/pokemon-game"
+      }
+    ],
+    "cta": "Open project"
+  },
+
+  "tech": {
+    "title": "Tech Stack",
+    "description": "These are the main technologies I use to build fast, modern and maintainable interfaces."
+  },
+
+  "contact": {
+    "title": "Contact",
+    "intro": "Do you want to work together or just say hi?",
+    "cta": "Send me an email"
+  },
+
+  "footer": {
+    "rights": "All rights reserved.",
+    "builtWith": "Built with Vue 3, TypeScript and Tailwind CSS."
+  }
+}

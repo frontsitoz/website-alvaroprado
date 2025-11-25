@@ -1,20 +1,27 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import BaseContainer from "@/components/layout/BaseContainer.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+</script>
 
 <template>
-  <section id="contact" class="mt-24 mb-16 space-y-4" data-aos="fade-up">
-    <h2 class="text-3xl font-semibold">Contact</h2>
+  <section id="contact" class="py-24">
+    <BaseContainer>
+      <h2 class="text-3xl md:text-4xl font-semibold mb-6">
+        {{ t("contact.title") }}
+      </h2>
 
-    <p class="text-sm text-white/70 max-w-xl">
-      I'm currently open to new opportunities, collaborations or interesting
-      frontend projects. If you want to work together or just say hi, feel free
-      to reach out.
-    </p>
+      <p class="opacity-80 mb-10">
+        {{ t("contact.intro") }}
+      </p>
 
-    <a
-      href="mailto:alvaropradodev@gmail.com"
-      class="inline-flex items-center px-5 py-2.5 rounded-full bg-accent-soft text-sm font-medium hover:bg-accent transition-colors"
-    >
-      Say hello 👋
-    </a>
+      <a
+        href="mailto:alvaritodev@outlook.es"
+        class="bg-purple-500 hover:bg-purple-600 transition px-8 py-4 rounded-full font-medium inline-block"
+      >
+        {{ t("contact.cta") }}
+      </a>
+    </BaseContainer>
   </section>
 </template>
