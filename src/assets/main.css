@@ -10,9 +10,11 @@ body {
 }
 
 body {
-  font-family: Preahvihear, system-ui, sans-serif;
+   font-family: "Preahvihear", sans-serif;
 }
-
+.banner-title {
+  font-family: "Poppins", sans-serif;
+}
 .cursor {
   display: inline-block;
   margin-left: 2px;

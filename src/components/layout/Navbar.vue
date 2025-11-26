@@ -31,15 +31,15 @@ const scrollToSection = (id: string) => {
     class="fixed top-0 left-0 w-full bg-nav-bg/90 backdrop-blur-xl z-50 border-b border-white/10 shadow-[0_0_15px_rgba(80,120,255,0.12)]"
   >
     <nav
-      class="max-w-6xl mx-auto flex items-center justify-between px-6 py-3 md:px-8"
+      class="max-w-6xl mx-auto flex items-center justify-between px-8 py-4 md:px-10 md:py-5"
     >
       <!-- Logo -->
       <button class="flex items-center group" @click="scrollToSection('hero')">
-        <img :src="logo" alt="Logo Álvaro" class="w-14 h-auto object-contain" />
+        <img :src="logo" alt="Logo Álvaro" class="w-16 h-auto object-contain" />
       </button>
 
       <!-- Desktop menu -->
-      <div class="hidden md:flex items-center gap-7 text-[15px]">
+      <div class="hidden md:flex items-center gap-10 text-[17px]">
         <button class="nav-item" @click="scrollToSection('hero')">
           {{ t("navbar.home") }}
         </button>
@@ -58,7 +58,7 @@ const scrollToSection = (id: string) => {
 
         <button
           @click="changeLang"
-          class="px-4 py-1 border border-white/30 rounded-md text-xs tracking-wide hover:bg-white/10 transition"
+          class="px-4 py-1.5 border border-white/30 rounded-md text-xs tracking-wide hover:bg-white/10 transition"
         >
           {{ locale === "es" ? t("navbar.langEn") : t("navbar.langEs") }}
         </button>
@@ -125,17 +125,19 @@ const scrollToSection = (id: string) => {
 .nav-item {
   @apply text-white/80 hover:text-white transition cursor-pointer;
   position: relative;
+  padding-bottom: 3px;
 }
 
 .nav-item::after {
   content: "";
   position: absolute;
-  bottom: -5px;
+  bottom: -4px;
   left: 0;
   width: 0%;
   height: 2px;
-  background: #3b82f6;
+  background: #6ba4ff;
   transition: width 0.25s ease-out;
+  border-radius: 2px;
 }
 
 .nav-item:hover::after {

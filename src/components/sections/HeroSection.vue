@@ -7,7 +7,7 @@ import meAvatar from "@/assets/images/avatar.png";
 
 const { t, tm } = useI18n();
 
-/* efecto typing */
+/* typing effect */
 const typedText = ref("");
 const phraseIndex = ref(0);
 const charIndex = ref(0);
@@ -18,9 +18,9 @@ const typedPhrases = computed(() => {
   return tm("hero.typedPhrases") as string[];
 });
 
-const TYPE_SPEED = 60;
+const TYPE_SPEED = 55;
 const DELETE_SPEED = 35;
-const PAUSE_AT_END = 1800;
+const PAUSE_AT_END = 1400;
 
 const typeStep = () => {
   const current = typedPhrases.value[phraseIndex.value];
@@ -65,53 +65,28 @@ const scrollToSection = (id: string) => {
 </script>
 
 <template>
-  <section id="hero" class="min-h-[90vh] flex items-center pt-24 md:pt-32">
+  <section id="hero" class="hero h-screen flex items-center justify-center">
     <BaseContainer>
-      <div
-        class="flex flex-col items-center text-center md:text-left md:items-start md:flex-row gap-12 md:gap-16 lg:gap-20"
-      >
-        <!-- AVATAR -->
+      <div class="hero-layout">
         <div class="hero-avatar-wrapper">
-          <img
-            :src="meAvatar"
-            class="hero-avatar animate-fade"
-            alt="Alvaro avatar"
-          />
+          <img :src="meAvatar" class="hero-avatar" alt="Alvaro avatar" />
         </div>
 
-        <!-- TEXTOS -->
-        <div class="flex-1 max-w-xl">
-          <p class="text-lg md:text-xl mb-2 text-white/70 animate-fade">
-            {{ t("hero.hello") }}
-          </p>
+        <div class="hero-text-wrapper">
+          <p class="intro">{{ t("hero.hello") }}</p>
+          <h1 class="name">{{ t("hero.name") }}</h1>
+          <p class="role">{{ t("hero.role") }}</p>
 
-          <h1
-            class="text-4xl md:text-5xl lg:text-5xl font-semibold mb-1 animate-fade"
-          >
-            {{ t("hero.name") }}
-          </h1>
-
-          <p
-            class="text-2xl md:text-4xl font-semibold text-accent mb-5 leading-tight animate-fade"
-          >
-            {{ t("hero.role") }}
-          </p>
-
-          <!-- typing -->
-          <div class="typing-container text-lg md:text-2xl font-medium mb-6">
+          <div class="typing-container">
             <span class="typing-text">{{ typedText }}</span>
-            <span class="cursor">|</span>
+            <span class="cursor"></span>
           </div>
 
-          <SocialLinks />
+          <div class="social-links-wrapper">
+            <SocialLinks />
+          </div>
 
-          <div
-            class="mt-6 flex flex-wrap gap-4 justify-center md:justify-start"
-          >
-            <button class="btn-primary" @click="scrollToSection('experience')">
-              {{ t("hero.scroll") }}
-            </button>
-
+          <div class="actions">
             <a href="/cv-alvaro.pdf" download class="btn-outline">
               {{ t("hero.downloadCv") }}
             </a>
@@ -119,88 +94,196 @@ const scrollToSection = (id: string) => {
         </div>
       </div>
 
-      <div class="mt-10 md:mt-16 flex justify-center">
-        <button
-          @click="scrollToSection('experience')"
-          class="arrow-bounce w-10 h-10 flex items-center justify-center rounded-full border border-white/20 text-white/70 hover:text-accent hover:border-accent transition"
-        >
-          ▼
-        </button>
+      <div class="hero-bottom">
+        <button @click="scrollToSection('experience')" class="arrow">▼</button>
       </div>
     </BaseContainer>
   </section>
 </template>
 
 <style scoped>
-.cursor {
-  animation: blink 1s steps(1) infinite;
+.hero {
+  padding-top: 110px;
 }
+/******** BOTONES — CORRECTO ********/
+.btn-primary {
+  @apply px-6 py-2.5 rounded-full bg-accent text-white text-sm font-medium hover:bg-accent-soft transition;
+}
+.btn-outline {
+  @apply px-6 py-2.5 rounded-full border transition font-medium text-sm;
+  border-color: rgba(107, 163, 255, 0.85);
+  color: rgba(107, 163, 255, 0.85);
+  background: transparent;
+  transition: all 0.25s ease;
+}
+
+.btn-outline:hover {
+  box-shadow: 0 0 10px rgba(107, 163, 255, 0.35);
+  transform: translateY(-2px);
+  border-width: 2px;
+  border-color: rgba(107, 163, 255, 1);
+  color: rgba(107, 163, 255, 1);
+}
+.hero-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 38px;
+}
+
+@media (min-width: 768px) {
+  .hero-layout {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 75px;
+  }
+}
+
+/* FIX — el texto ya no empuja el avatar */
+.hero-text-wrapper {
+  flex: 1;
+  min-width: 350px;
+  max-width: 660px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .hero-text-wrapper {
+    text-align: left;
+  }
+}
+
+/******** AVATAR *********/
+.hero-avatar-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-avatar {
+  width: 240px;
+  height: 240px;
+  object-fit: contain;
+  border-radius: 999px;
+  filter: drop-shadow(0px 0px 30px rgba(110, 130, 255, 0.55))
+    drop-shadow(0px 0px 85px rgba(90, 110, 255, 0.35));
+  transition: transform 0.3s ease;
+}
+
+@media (min-width: 1024px) {
+  .hero-avatar {
+    width: 330px;
+    height: 330px;
+  }
+}
+
+/******** TEXT *********/
+.intro {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 5px;
+}
+
+.name {
+  font-size: 3.1rem;
+  font-weight: 600;
+  margin-bottom: -6px;
+  color: white;
+  font-family: "Preahvihear", sans-serif;
+}
+
+.role {
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: #6ba4ff;
+  margin-bottom: 14px;
+  font-family: "Preahvihear", sans-serif;
+}
+
+/******** TYPING *********/
+.typing-container {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  font-size: 1.45rem;
+  min-height: 52px;
+  max-width: 660px;
+  word-break: break-word;
+}
+
+.typing-text {
+  display: inline;
+  color: rgba(255, 255, 255, 0.92);
+  font-family: "Preahvihear", sans-serif;
+}
+
+/* Cursor siempre alineado correcto */
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1.1em;
+  margin-left: 4px;
+  background: rgba(255, 255, 255, 0.85);
+  animation: blink 0.8s ease infinite;
+  vertical-align: baseline;
+  position: relative;
+  top: -1px;
+}
+
 @keyframes blink {
   50% {
     opacity: 0;
   }
 }
 
-/* Avatar halo */
-.hero-avatar-wrapper {
-  width: 260px;
-  height: 260px;
+/******** SOCIAL *********/
+.social-links-wrapper {
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
+  margin-top: 12px;
+  margin-bottom: 18px;
 }
 
-.animate-fade {
-  opacity: 0;
-  animation: fadeIn 1s ease forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+@media (min-width: 768px) {
+  .social-links-wrapper {
+    justify-content: flex-start;
   }
 }
 
-.hero-avatar {
-  width: 220px;
-  height: 220px;
-  border-radius: 999px;
-  object-fit: contain;
-  box-shadow: 0 0 18px rgba(110, 130, 255, 0.5),
-    0 0 45px rgba(80, 90, 230, 0.25), 0 0 90px rgba(50, 60, 180, 0.1);
+/******** BUTTONS *********/
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
 }
 
-.typing-container {
-  min-height: 50px;
-  max-height: 50px;
-  overflow: hidden;
-  white-space: normal;
-  word-break: break-word;
+@media (min-width: 768px) {
+  .actions {
+    justify-content: flex-start;
+  }
 }
 
-.typing-text {
-  display: inline;
-  color: rgba(255, 255, 255, 0.85);
+/******** ARROW *********/
+.hero-bottom {
+  display: flex;
+  justify-content: center;
+  margin-top: 70px;
 }
 
-/* botones */
-.btn-primary {
-  @apply px-5 py-2.5 rounded-full bg-accent text-sm font-medium hover:bg-accent-soft transition;
-}
-.btn-outline {
-  @apply px-5 py-2.5 rounded-full border border-white/20 text-sm font-medium text-white/80 hover:border-accent hover:text-accent transition;
+@media (min-width: 1024px) {
+  .hero-bottom {
+    margin-top: 100px;
+  }
 }
 
-/* bounce ↓ */
-.arrow-bounce {
+.arrow {
   animation: bounce 1.6s infinite;
+  font-size: 1.4rem;
+  opacity: 0.85;
 }
+
 @keyframes bounce {
   0%,
   100% {

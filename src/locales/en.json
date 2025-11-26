@@ -26,7 +26,7 @@
 
   "experience": {
     "title": "Work experience",
-    "items": [
+    "jobs": [
       {
         "key": "umatec",
         "company": "UMATEC · Client: Netzun",
@@ -51,7 +51,6 @@
       }
     ]
   },
-
   "projects": {
     "title": "Highlighted projects",
     "label": "Highlighted project",

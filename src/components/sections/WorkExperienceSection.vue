@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import BaseContainer from "@/components/layout/BaseContainer.vue";
-import umatecLogo from "../../assets/logos-companies/logo-umatec.png";
+import umatecLogo from "../../assets/logos/umatec.png";
+import avatarLogo from "../../assets/images/avatar.png";
 
-const { t } = useI18n();
+const { t, tm } = useI18n();
 
-/**
- * ACTIVACIÓN DE ANIMACIÓN
- * — se activa cuando la sección entra a pantalla
- */
 const visible = ref(false);
 
 onMounted(() => {
@@ -20,12 +17,23 @@ onMounted(() => {
         observer.disconnect();
       }
     },
-    { threshold: 0.2 }
+    { threshold: 0.18 }
   );
 
   const section = document.getElementById("experience");
   if (section) observer.observe(section);
 });
+
+/**
+ * FIX ✔
+ * jobs ahora se vuelve a traducir cuando cambia el idioma
+ */
+const jobs = computed(() => tm("experience.jobs") as any[]);
+
+const getLogo = (key: string) => {
+  if (key === "umatec") return umatecLogo;
+  return avatarLogo;
+};
 </script>
 
 <template>
@@ -43,35 +51,37 @@ onMounted(() => {
         {{ t("experience.title") }}
       </h2>
 
-      <!-- CARD animado -->
-      <div
-        class="exp-card group transition-all duration-500 ease-out hover:scale-[1.01]"
-      >
+      <!-- render dinámico de experiencia -->
+      <div v-for="job in jobs" :key="job.key" class="exp-card mb-7 group">
         <div class="flex items-start gap-4">
           <img
-            :src="umatecLogo"
-            class="w-12 h-12 rounded-md border border-white/10 object-cover transition-transform duration-300 group-hover:scale-[1.05]"
+            :src="getLogo(job.key)"
+            class="w-12 h-12 object-cover rounded-md border border-white/10 transition-transform duration-300 group-hover:scale-[1.06]"
           />
 
-          <div
-            class="flex-1 transition-all duration-300 group-hover:translate-x-[4px]"
-          >
-            <h3 class="text-xl font-semibold text-accent">
-              UMATEC · Client: Netzun
+          <div class="flex-1 group-hover:translate-x-[4px] transition-all">
+            <h3 class="text-xl font-semibold text-accent leading-tight">
+              {{ job.company }}
             </h3>
 
-            <div
-              class="flex flex-wrap items-center gap-2 text-white/60 text-sm mb-3"
+            <p
+              class="text-white/60 text-sm mb-3 flex items-center flex-wrap gap-3"
             >
-              <span>Web Developer / Email Builder</span>
-              <span class="h-1 w-1 rounded-full bg-white/30"></span>
-              <span>Jun 2023 – Jul 2024</span>
-            </div>
+              <span>{{ job.role }}</span>
+              <span
+                class="inline-block h-1 w-1 rounded-full bg-white/30"
+              ></span>
+              <span>{{ job.period }}</span>
+            </p>
 
             <ul class="space-y-2">
-              <li class="exp-li">Responsive email coding</li>
-              <li class="exp-li">Reusable templates</li>
-              <li class="exp-li">Integration with AWS services</li>
+              <li
+                v-for="(highlight, index) in job.highlights"
+                :key="index"
+                class="exp-li"
+              >
+                {{ highlight }}
+              </li>
             </ul>
           </div>
         </div>
@@ -91,10 +101,11 @@ onMounted(() => {
   box-shadow: 0 10px 25px rgba(59, 130, 246, 0.12);
 }
 
+/* bullets */
 .exp-li {
   position: relative;
   padding-left: 16px;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.78);
   transition: color 0.25s ease-out;
 }
 .exp-li:hover {
@@ -112,6 +123,6 @@ onMounted(() => {
   transition: transform 0.25s ease-out;
 }
 .exp-li:hover::before {
-  transform: scale(1.3);
+  transform: scale(1.25);
 }
 </style>
