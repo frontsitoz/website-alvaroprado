@@ -1,9 +1,20 @@
 {
+<<<<<<< HEAD
   "nav": {
     "home": "Home",
     "experience": "Experience",
     "projects": "Projects",
     "contact": "Contact"
+=======
+  "navbar": {
+    "home": "Home",
+    "experience": "Experience",
+    "projects": "Projects",
+    "tech": "Tech",
+    "contact": "Contact",
+    "langEn": "EN",
+    "langEs": "ES"
+>>>>>>> nueva-version
   },
 
   "hero": {
@@ -11,6 +22,7 @@
     "name": "Álvaro Prado",
     "role": "Frontend Developer",
     "typedPhrases": [
+<<<<<<< HEAD
       "I design modern web interfaces.",
       "I create thoughtful digital experiences.",
       "I work with Vue.js, TypeScript & Tailwind CSS."
@@ -48,17 +60,59 @@
           "Continuous learning through side projects and experimentation with new tools."
         ],
         "cta": "See projects"
+=======
+      "I build clear and usable interfaces.",
+      "I turn designs into functional products.",
+      "I work with Vue, TypeScript y Tailwind CSS",
+      "I create web experiences focused on real people.",
+      "I blend aesthetics, performance and usability."
+    ],
+    "scroll": "Go to experience",
+    "downloadCv": "Download CV"
+  },
+
+  "experience": {
+    "title": "Work experience",
+    "items": [
+      {
+        "key": "umatec",
+        "company": "UMATEC · Client: Netzun",
+        "role": "Web Developer / Email Coder",
+        "period": "Jun 2023 – Jul 2024 · Lima, Peru · Hybrid",
+        "highlights": [
+          "Full-time allocation to Netzun (via UMATEC) coding responsive emails and landing pages.",
+          "Creation of reusable templates and components with focus on accessibility and cross-client support.",
+          "Integration with AWS services and version control with Git."
+        ]
+      },
+      {
+        "key": "personal",
+        "company": "Personal projects",
+        "role": "Frontend Developer",
+        "period": "Ongoing · Remote",
+        "highlights": [
+          "Development of SPAs using Vue 3, Angular and TypeScript.",
+          "Use of good UI patterns, responsive design and component-based architecture.",
+          "Continuous learning through personal projects and experimentation with new tools."
+        ]
+>>>>>>> nueva-version
       }
     ]
   },
 
   "projects": {
+<<<<<<< HEAD
     "title": "Featured Projects",
     "label": "Featured Project",
+=======
+    "title": "Highlighted projects",
+    "label": "Highlighted project",
+>>>>>>> nueva-version
     "items": [
       {
         "slug": "andeswarmi",
         "title": "AndesWarmi",
+<<<<<<< HEAD
         "subtitle": "E-commerce for Traditional Peruvian Clothing",
         "description": "E-commerce platform for AndesWarmi, a brand specializing in traditional Peruvian clothing and accessories. Features product catalog, shopping cart, and secure checkout.",
         "role": "Vue 3 · TypeScript · Tailwind CSS · Firebase",
@@ -85,19 +139,36 @@
         "level": "Practice",
         "tags": ["Vue 3", "Game", "API"],
         "link": "https://github.com/frontsitoz/pokemon-game"
+=======
+        "subtitle": "Alpaca & vicuña store",
+        "description": "E-commerce concept built with Angular for selling alpaca and vicuña garments with a clean and modern UI.",
+        "role": "Angular · TypeScript · Tailwind CSS",
+        "level": "Intermediate",
+        "tags": ["Angular", "TypeScript", "Tailwind CSS", "E-commerce"],
+        "link": "https://github.com/frontsitoz/andeswarmi"
+>>>>>>> nueva-version
       }
     ],
     "cta": "Open project"
   },
 
   "tech": {
+<<<<<<< HEAD
     "title": "Tech Stack",
     "description": "These are the main technologies I use to build fast, modern and maintainable interfaces."
+=======
+    "title": "Tech stack",
+    "description": "These are the main technologies I use to build modern, fast and maintainable interfaces."
+>>>>>>> nueva-version
   },
 
   "contact": {
     "title": "Contact",
+<<<<<<< HEAD
     "intro": "Do you want to work together or just say hi?",
+=======
+    "intro": "Would you like to work together or just say hi?",
+>>>>>>> nueva-version
     "cta": "Send me an email"
   },
 

@@ -1,63 +1,120 @@
 <script setup lang="ts">
-const projects = [
-  {
-    title: "Example Project",
-    description:
-      "A web app for visualising personalized data, with clean UI and smooth interactions.",
-    role: "Frontend Development · UI Design",
-    image: "@/assets/images/project-1.png", // cambia luego por tus capturas
-  },
-  {
-    title: "Another Project",
-    description:
-      "A dashboard focused on accessibility, performance and modern frontend patterns.",
-    role: "Vue 3 · TypeScript · Tailwind CSS",
-    image: "@/assets/images/project-2.png",
-  },
-];
+import { useI18n } from "vue-i18n";
+import { ref, onMounted } from "vue";
+import BaseContainer from "@/components/layout/BaseContainer.vue";
+import andeswarmiFull from "../../assets/projects/page-andeswarmi.png";
+
+const { t } = useI18n();
+
+// detecta cuando aparece en viewport 👇
+const visible = ref(false);
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        visible.value = true;
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.15 }
+  );
+
+  const section = document.getElementById("projects");
+  if (section) observer.observe(section);
+});
 </script>
 
 <template>
-  <section class="mt-24 space-y-10" id="projects">
-    <h2 class="text-3xl font-semibold" data-aos="fade-up">Featured Projects</h2>
+  <section
+    id="projects"
+    :class="[
+      'scroll-mt-40 py-24 transition-all duration-700',
+      visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12',
+    ]"
+  >
+    <BaseContainer>
+      <h2 class="text-3xl md:text-4xl font-semibold mb-10">
+        {{ t("projects.title") }}
+      </h2>
 
-    <div class="space-y-12">
-      <article
-        v-for="(project, index) in projects"
-        :key="project.title"
-        class="grid md:grid-cols-2 gap-8 items-center"
-        :data-aos="index % 2 === 0 ? 'fade-right' : 'fade-left'"
-      >
-        <!-- Texto -->
-        <div class="space-y-3 order-2 md:order-1">
-          <p class="text-xs uppercase tracking-[0.2em] text-white/60">
-            Featured Project
-          </p>
-          <h3 class="text-xl font-semibold">
-            {{ project.title }}
-          </h3>
-          <p class="text-sm text-white/70">
-            {{ project.description }}
-          </p>
-          <p class="text-xs text-white/50">
-            {{ project.role }}
-          </p>
-        </div>
-
-        <!-- Imagen / mockup -->
-        <div class="relative order-1 md:order-2">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <!-- IMAGEN CON EFECTO -->
+        <div
+          class="project-img group relative rounded-3xl overflow-hidden shadow-lg"
+        >
           <div
-            class="rounded-3xl bg-bg-card/90 border border-white/10 overflow-hidden shadow-glow hover:scale-[1.02] transition-transform duration-300"
+            class="h-[460px] overflow-y-auto overflow-x-hidden rounded-2xl border border-white/10 scrollbar-hide"
           >
-            <!-- placeholder, luego cambias por tus screenshots reales -->
-            <div
-              class="aspect-video bg-gradient-to-br from-accent-soft/40 to-bg-main/80 flex items-center justify-center text-xs text-white/50"
-            >
-              Project screenshot
-            </div>
+            <img
+              :src="andeswarmiFull"
+              class="w-full transition-transform duration-700 group-hover:scale-105"
+              alt="AndesWarmi website preview"
+            />
           </div>
+
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none transition-opacity duration-300 group-hover:opacity-70"
+          ></div>
         </div>
-      </article>
-    </div>
+
+        <!-- TEXTO -->
+        <div class="text-left space-y-4 transition-all duration-500">
+          <p class="text-[11px] uppercase tracking-[0.25em] text-white/50">
+            {{ t("projects.label") }}
+          </p>
+          <h3 class="text-3xl font-semibold text-accent">AndesWarmi</h3>
+          <p class="text-base text-white/70 leading-relaxed">
+            {{ t("projects.items.0.description") }}
+          </p>
+
+          <p class="text-sm text-white/60 tracking-wide">
+            {{ t("projects.items.0.role") }}
+          </p>
+
+          <a
+            href="https://github.com/frontsitoz/andeswarmi"
+            target="_blank"
+            class="project-btn inline-block px-5 py-2.5 rounded-full text-sm font-medium transition"
+          >
+            {{ t("projects.cta") }}
+          </a>
+        </div>
+      </div>
+    </BaseContainer>
   </section>
 </template>
+
+<style scoped>
+/* efecto hover pro */
+.project-img {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.35s ease;
+}
+.project-img:hover {
+  border-color: rgba(100, 160, 255, 0.35);
+  box-shadow: 0 0 35px rgba(100, 160, 255, 0.25);
+}
+
+/* CTa */
+.project-btn {
+  background: rgba(80, 120, 255, 0.15);
+  border: 1px solid rgba(120, 150, 255, 0.35);
+  backdrop-filter: blur(6px);
+}
+.project-btn:hover {
+  background: rgba(120, 160, 255, 0.25);
+  border-color: rgba(160, 200, 255, 0.9);
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* ocultar scrollbar */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+</style>

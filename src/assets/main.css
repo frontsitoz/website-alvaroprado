@@ -1,13 +1,87 @@
-@import url('https://fonts.googleapis.com/css2?family=Preahvihear&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: dark;
+html,
+body {
+  @apply bg-bg-main text-white antialiased;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  @apply bg-bg-main text-white antialiased font-sans;
+  font-family: Preahvihear, system-ui, sans-serif;
+}
+
+.cursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Avatar fino */
+.avatar-style {
+  box-shadow: 4px 5px 3px #5073a8, 0 0 0 5px rgb(31 71 172 / 0%);
+  border-radius: 100%;
+}
+
+/* typing box estable */
+.typing-box {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  min-height: 30px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Texto typing sin mover layout */
+.typing-text {
+  display: inline-block;
+  font-feature-settings: "liga" 0;
+  font-variant-ligatures: none;
+}
+
+/* flecha abajo */
+.arrow-bounce {
+  animation: bounce 1.6s infinite;
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+@media (max-width: 768px) {
+  img[alt="avatar"] {
+    width: 260px !important;
+    height: 260px !important;
+    margin: 0 auto !important;
+  }
+}
+
+[data-aos="fade-up"] {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+[data-aos="fade-up"].aos-animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hover-glow:hover {
+  filter: drop-shadow(0px 0px 6px rgba(66, 140, 255, 0.5));
+  transform: translateY(-1px);
 }

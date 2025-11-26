@@ -1,0 +1,217 @@
+diff --git a/src/components/sections/ContactSection.vue b/src/components/sections/ContactSection.vue
+index d9358ec..7967931 100644
+--- a/src/components/sections/ContactSection.vue
++++ b/src/components/sections/ContactSection.vue
+@@ -18,7 +18,7 @@ const { t } = useI18n();
+ 
+       <a
+         href="mailto:alvaroprado.dev@gmail.com"
+-        class="bg-purple-700 hover:bg-purple-400 transition text-black font-medium px-6 py-3 rounded-full inline-block"
++        class="bg-purple-800 transition hover:text-purple-800 hover:bg-white font-medium px-6 py-3 rounded-full inline-block"
+       >
+         {{ t("contact.cta") }}
+       </a>
+diff --git a/src/components/sections/HeroSection.vue b/src/components/sections/HeroSection.vue
+index 5ad3488..7b466cd 100644
+--- a/src/components/sections/HeroSection.vue
++++ b/src/components/sections/HeroSection.vue
+@@ -100,7 +100,7 @@ onUnmounted(() => {
+             <a
+               href="/cv-alvaro.pdf"
+               download
+-              class="bg-purple-800 text-white font-medium px-6 py-3 rounded-full inline-block mt-3"
++              class="bg-purple-800 text-white font-medium px-6 py-3 rounded-full inline-block mt-3 hover:bg-white hover:text-purple-800 transition"
+             >
+               {{ t("hero.cta") }}
+             </a>
+@@ -112,7 +112,7 @@ onUnmounted(() => {
+     <div class="flex justify-center mt-10">
+       <a
+         href="#experience"
+-        class="opacity-70 hover:opacity-100 transition text-lg md:text-sm flex flex-col items-center gap-1"
++        class="opacity-70 hover:opacity-100 transition text-lg md:text-sm flex flex-col items-center"
+         aria-label="Ir a mi experiencia"
+       >
+         <span class="text-3xl">↓</span>
+diff --git a/src/components/sections/ProjectsSection.vue b/src/components/sections/ProjectsSection.vue
+index 054947e..427d15f 100644
+--- a/src/components/sections/ProjectsSection.vue
++++ b/src/components/sections/ProjectsSection.vue
+@@ -1,8 +1,9 @@
+ <script setup lang="ts">
+-import { computed } from "vue";
++import { ref, computed, onUnmounted } from "vue";
+ import { useI18n } from "vue-i18n";
+ import BaseContainer from "@/components/layout/BaseContainer.vue";
+ import { i18n } from "@/i18n";
++import andeswarmiFull from "@/assets/projects/page-andeswarmi.png";
+ 
+ const { t } = useI18n();
+ 
+@@ -24,10 +25,34 @@ const projects = computed<Project[]>(() => {
+   return Array.isArray(raw) ? (raw as Project[]) : [];
+ });
+ 
+-const openProject = (url: string) => {
+-  if (!url || url === "#") return;
+-  window.open(url, "_blank", "noopener,noreferrer");
++const scrollRefs = ref<(HTMLElement | null)[]>([]);
++
++const setScrollRef = (el: HTMLElement | null, index: number) => {
++  scrollRefs.value[index] = el;
++};
++
++let scrollTimer: number | null = null;
++
++const startScroll = (index: number) => {
++  stopScroll();
++  scrollTimer = window.setInterval(() => {
++    const box = scrollRefs.value[index];
++    if (!box) return;
++    box.scrollTop += 1;
++    if (box.scrollTop + box.clientHeight >= box.scrollHeight) {
++      box.scrollTop = 0;
++    }
++  }, 20);
+ };
++
++const stopScroll = () => {
++  if (scrollTimer) {
++    clearInterval(scrollTimer);
++    scrollTimer = null;
++  }
++};
++
++onUnmounted(() => stopScroll());
+ </script>
+ 
+ <template>
+@@ -42,21 +67,20 @@ const openProject = (url: string) => {
+           v-for="(p, index) in projects"
+           :key="p.slug"
+           class="grid md:grid-cols-2 gap-10 items-center"
+-          data-aos="fade-up"
+-          :data-aos-delay="index * 120"
+         >
+-          <div
+-            class="group relative rounded-3xl overflow-hidden shadow-glow cursor-pointer"
+-            @click="openProject(p.link)"
+-          >
+-            <img
+-              :src="`/projects/${p.slug}.png`"
+-              :alt="`Vista previa del proyecto ${p.title}`"
+-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+-            />
++          <div class="group relative rounded-3xl overflow-hidden shadow-glow">
+             <div
+-              class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
+-            ></div>
++              class="h-[460px] overflow-hidden rounded-3xl border border-white/10 select-none opacity-80"
++              :ref="(el: HTMLElement | null) => setScrollRef(el, index)"
++              @mouseenter="startScroll(index)"
++              @mouseleave="stopScroll"
++            >
++              <img
++                v-if="p.slug === 'andeswarmi'"
++                :src="andeswarmiFull"
++                class="w-full pointer-events-none"
++              />
++            </div>
+           </div>
+ 
+           <div class="text-left space-y-3">
+@@ -65,14 +89,8 @@ const openProject = (url: string) => {
+             </p>
+             <h3 class="text-2xl font-semibold">{{ p.title }}</h3>
+             <p class="text-sm text-white/60">{{ p.subtitle }}</p>
+-
+-            <p class="text-white/70 leading-relaxed">
+-              {{ p.description }}
+-            </p>
+-
+-            <p class="text-sm text-white/70">
+-              {{ p.role }}
+-            </p>
++            <p class="text-white/70 leading-relaxed">{{ p.description }}</p>
++            <p class="text-sm text-white/70">{{ p.role }}</p>
+ 
+             <div class="flex gap-2 flex-wrap">
+               <span
+@@ -90,8 +108,8 @@ const openProject = (url: string) => {
+             </div>
+ 
+             <button
+-              class="mt-4 px-4 py-2 bg-purple-700 rounded-full text-white hover:bg-white hover:text-purple-700 transition"
+-              @click="openProject(p.link)"
++              class="mt-4 px-4 py-2 bg-purple-800 rounded-full text-white hover:bg-white hover:text-purple-800 transition"
++              @click="() => window.open(p.link, '_blank')"
+             >
+               {{ t("projects.cta") }}
+             </button>
+diff --git a/src/components/sections/WorkExperienceSection.vue b/src/components/sections/WorkExperienceSection.vue
+index dfd5924..a586a99 100644
+--- a/src/components/sections/WorkExperienceSection.vue
++++ b/src/components/sections/WorkExperienceSection.vue
+@@ -34,12 +34,17 @@ const experiences = computed<Experience[]>(() => {
+         <article
+           v-for="(item, index) in experiences"
+           :key="index"
+-          class="bg-bg-card/90 border border-white/10 rounded-3xl p-8 shadow-glow hover:translate-y-1 transition-transform duration-300 backdrop-blur-sm"
++          class="bg-bg-card/60 border border-white/10 rounded-3xl p-8 shadow-glow hover:translate-y-1 transition-transform duration-300 backdrop-blur-sm"
+           data-aos="fade-up"
+           :data-aos-delay="index * 120"
+         >
+           <div class="flex items-center gap-3 text-2xl">
+-            <span>{{ item.icon }}</span>
++            <img
++              :src="item.logo"
++              :alt="item.company + ' logo'"
++              class="w-10 h-10 object-contain rounded-xl"
++            />
++
+             <div class="flex flex-col">
+               <h3 class="text-lg font-semibold">
+                 {{ item.role }}
+@@ -57,12 +62,6 @@ const experiences = computed<Experience[]>(() => {
+           <ul class="mt-4 space-y-2 text-sm text-white/80">
+             <li v-for="(line, i) in item.highlights" :key="i">• {{ line }}</li>
+           </ul>
+-
+-          <button
+-            class="mt-6 px-4 py-2 text-xs bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+-          >
+-            {{ item.cta }}
+-          </button>
+         </article>
+       </div>
+     </BaseContainer>
+diff --git a/src/locales/en.json b/src/locales/en.json
+index bf5fd7f..97b5ab1 100644
+--- a/src/locales/en.json
++++ b/src/locales/en.json
+@@ -25,7 +25,8 @@
+     "title": "Work Experience",
+     "items": [
+       {
+-        "icon": "💼",
++        "logo": "/src/assets/logos/umatec.png",
++
+         "company": "UMATEC · Client: Netzun",
+         "role": "Web Developer / Email & Landing Page Markup",
+         "period": "Jun 2023 – Jul 2024 · Lima, Peru · Hybrid",
+@@ -58,11 +59,11 @@
+       {
+         "slug": "andeswarmi",
+         "title": "AndesWarmi",
+-        "subtitle": "Peruvian Alpaca & Vicuña Store",
+-        "description": "E-commerce concept built with Angular focused on selling premium alpaca and vicuña garments with a clean, modern UI.",
+-        "role": "Angular · TypeScript · Tailwind CSS",
++        "subtitle": "E-commerce for Traditional Peruvian Clothing",
++        "description": "E-commerce platform for AndesWarmi, a brand specializing in traditional Peruvian clothing and accessories. Features product catalog, shopping cart, and secure checkout.",
++        "role": "Vue 3 · TypeScript · Tailwind CSS · Firebase",
+         "level": "Intermediate",
+-        "tags": ["Angular", "TypeScript", "Tailwind", "E-commerce"],
++        "tags": ["Vue 3", "TypeScript", "Tailwind CSS", "Firebase"],
+         "link": "https://github.com/frontsitoz/andeswarmi"
+       },
+       {

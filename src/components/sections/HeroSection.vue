@@ -90,36 +90,44 @@ onUnmounted(() => {
           {{ typedText }}<span class="cursor">|</span>
         </h2>
 
-        <!-- Descripción -->
-        <p class="text-white/70 leading-relaxed max-w-lg">
-          I design and build modern web interfaces using Vue.js, TypeScript and
-          Tailwind CSS, focusing on clean code and smooth user experiences.
-        </p>
-
-        <p class="text-white/70 leading-relaxed max-w-lg">
-          I enjoy creating delightful digital products that balance business
-          goals and user needs.
-        </p>
-
-        <!-- Botones CTA -->
-        <div class="flex flex-wrap gap-4 pt-4">
-          <a
-            href="/AlvaroPrado-CV.pdf"
-            target="_blank"
-            class="px-6 py-3 rounded-full bg-purple-600 text-white font-medium text-sm md:text-base hover:bg-purple-500 transition"
+          <p
+            class="text-xl text-blue-500 font-semibold min-h-[30px] tracking-wide text-center md:text-left"
           >
-            Download CV
-          </a>
+            <span class="typedText">{{ typedText }}</span>
+            <span class="cursor">|</span>
+          </p>
 
-          <a
-            href="https://www.linkedin.com/in/alvaropradotenorio"
-            target="_blank"
-            class="px-6 py-3 rounded-full border border-white/25 text-white/80 text-sm md:text-base hover:bg-white/10 hover:text-white transition"
-          >
-            LinkedIn
-          </a>
+          <p class="opacity-80 text-sm md:text-base">
+            {{ t("hero.descriptionShort") }}
+          </p>
+
+          <!-- redes sociales centradas -->
+          <div class="flex justify-center md:justify-start mt-4">
+            <SocialLinks class="scale-100 md:scale-100" />
+          </div>
+
+          <div class="flex justify-center md:justify-start">
+            <a
+              href="/cv-alvaro.pdf"
+              download
+              class="bg-purple-800 text-white font-medium px-6 py-3 rounded-full inline-block mt-3"
+            >
+              {{ t("hero.cta") }}
+            </a>
+          </div>
         </div>
       </div>
+    </BaseContainer>
+
+    <div class="flex justify-center mt-10">
+      <a
+        href="#experience"
+        class="opacity-70 hover:opacity-100 transition text-lg md:text-sm flex flex-col items-center gap-1"
+        aria-label="Ir a mi experiencia"
+      >
+        <span class="text-3xl">↓</span>
+        <span class="opacity-70 hidden md:block">{{ t("hero.scroll") }}</span>
+      </a>
     </div>
   </section>
 </template>

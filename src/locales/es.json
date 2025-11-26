@@ -1,0 +1,87 @@
+{
+  "navbar": {
+    "home": "Inicio",
+    "experience": "Experiencia",
+    "projects": "Proyectos",
+    "tech": "Tecnologías",
+    "contact": "Contacto",
+    "langEn": "EN",
+    "langEs": "ES"
+  },
+
+  "hero": {
+    "hello": "¡Hola! Soy",
+    "name": "Álvaro Prado",
+    "role": "Desarrollador Frontend",
+    "typedPhrases": [
+      "Construyo interfaces claras y usables.",
+      "Transformo diseños en interfaces fluidas y escalables.",
+      "Trabajo con Vue, TypeScript, Tailwind CSS.",
+      "Creo experiencias web enfocadas en las personas.",
+      "Me enfoco en simplicidad, legibilidad y detalle."
+    ],
+    "scroll": "Ir a mi experiencia",
+    "downloadCv": "Descargar CV"
+  },
+  "experience": {
+    "title": "Experiencia laboral",
+    "items": [
+      {
+        "key": "umatec",
+        "company": "UMATEC · Cliente: Netzun",
+        "role": "Programador web / Maquetador",
+        "period": "jun. 2023 – jul. 2024 · Lima, Perú · Híbrido",
+        "highlights": [
+          "Asignación full-time a Netzun (vía UMATEC) para la maquetación de emails y landings responsive.",
+          "Creación de plantillas y componentes reutilizables con foco en accesibilidad y soporte cross-client.",
+          "Integración con servicios de AWS y control de versiones con Git."
+        ]
+      },
+      {
+        "key": "personal",
+        "company": "Proyectos personales",
+        "role": "Frontend Developer",
+        "period": "En curso · Remoto",
+        "highlights": [
+          "Desarrollo de SPAs con Vue 3, Angular y TypeScript.",
+          "Aplicación de buenos patrones de UI, diseño responsive y arquitectura basada en componentes.",
+          "Aprendizaje continuo a través de proyectos propios y experimentación con nuevas herramientas."
+        ]
+      }
+    ]
+  },
+
+  "projects": {
+    "title": "Proyectos destacados",
+    "label": "Proyecto destacado",
+    "items": [
+      {
+        "slug": "andeswarmi",
+        "title": "AndesWarmi",
+        "subtitle": "Tienda de alpaca y vicuña",
+        "description": "Concepto de e-commerce construido con Angular para la venta de prendas de alpaca y vicuña con una UI limpia y moderna.",
+        "role": "Angular · TypeScript · Tailwind CSS",
+        "level": "Intermedio",
+        "tags": ["Angular", "TypeScript", "Tailwind CSS", "E-commerce"],
+        "link": "https://github.com/frontsitoz/andeswarmi"
+      }
+    ],
+    "cta": "Ir al proyecto"
+  },
+
+  "tech": {
+    "title": "Stack tecnológico",
+    "description": "Estas son las principales tecnologías que utilizo para construir interfaces modernas, rápidas y mantenibles."
+  },
+
+  "contact": {
+    "title": "Contacto",
+    "intro": "¿Te gustaría que trabajemos juntos o simplemente saludar?",
+    "cta": "Enviarme un correo"
+  },
+
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "builtWith": "Desarrollado con Vue 3, TypeScript y Tailwind CSS."
+  }
+}
