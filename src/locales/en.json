@@ -1,0 +1,88 @@
+{
+  "navbar": {
+    "home": "Home",
+    "experience": "Experience",
+    "projects": "Projects",
+    "tech": "Tech",
+    "contact": "Contact",
+    "langEn": "EN",
+    "langEs": "ES"
+  },
+
+  "hero": {
+    "hello": "Hello! I'm",
+    "name": "Álvaro Prado",
+    "role": "Frontend Developer",
+    "typedPhrases": [
+      "I build clear and usable interfaces.",
+      "I turn designs into functional products.",
+      "I work with Vue, TypeScript y Tailwind CSS",
+      "I create web experiences focused on real people.",
+      "I blend aesthetics, performance and usability."
+    ],
+    "scroll": "Go to experience",
+    "downloadCv": "Download CV"
+  },
+
+  "experience": {
+    "title": "Work experience",
+    "items": [
+      {
+        "key": "umatec",
+        "company": "UMATEC · Client: Netzun",
+        "role": "Web Developer / Email Coder",
+        "period": "Jun 2023 – Jul 2024 · Lima, Peru · Hybrid",
+        "highlights": [
+          "Full-time allocation to Netzun (via UMATEC) coding responsive emails and landing pages.",
+          "Creation of reusable templates and components with focus on accessibility and cross-client support.",
+          "Integration with AWS services and version control with Git."
+        ]
+      },
+      {
+        "key": "personal",
+        "company": "Personal projects",
+        "role": "Frontend Developer",
+        "period": "Ongoing · Remote",
+        "highlights": [
+          "Development of SPAs using Vue 3, Angular and TypeScript.",
+          "Use of good UI patterns, responsive design and component-based architecture.",
+          "Continuous learning through personal projects and experimentation with new tools."
+        ]
+      }
+    ]
+  },
+
+  "projects": {
+    "title": "Highlighted projects",
+    "label": "Highlighted project",
+    "items": [
+      {
+        "slug": "andeswarmi",
+        "title": "AndesWarmi",
+        "subtitle": "Alpaca & vicuña store",
+        "description": "E-commerce concept built with Angular for selling alpaca and vicuña garments with a clean and modern UI.",
+        "role": "Angular · TypeScript · Tailwind CSS",
+        "level": "Intermediate",
+        "tags": ["Angular", "TypeScript", "Tailwind CSS", "E-commerce"],
+        "link": "https://github.com/frontsitoz/andeswarmi"
+      }
+    ],
+    "cta": "Open project"
+  },
+
+  "tech": {
+    "title": "Tech stack",
+    "description": "These are the main technologies I use to build modern, fast and maintainable interfaces."
+  },
+
+  "contact": {
+    "title": "Contact",
+    "intro": "Would you like to work together or just say hi?",
+    "cta": "Send me an email"
+  },
+
+  "footer": {
+    "rights": "All rights reserved.",
+    "builtWith": "Built with Vue 3, TypeScript and Tailwind CSS."
+  }
+}

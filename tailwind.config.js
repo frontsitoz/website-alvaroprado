@@ -5,16 +5,15 @@ module.exports = {
     extend: {
       colors: {
         "bg-main": "#050016",
-        "bg-card": "#3C1675",
-        accent: "#D08BFF",
-        "accent-soft": "#8B5CF6",
-        "nav-bg": "#1A0B2E",
+        accent: "#6ba3ff",
+        "accent-soft": "#4d8ee8",
+        "nav-bg": "#0c0a1f",
       },
       fontFamily: {
         sans: ["Preahvihear", "sans-serif"],
       },
       boxShadow: {
-        glow: "0 0 60px rgba(192, 132, 252, 0.6)",
+        glow: "0px 0px 32px rgba(80, 115, 168, 0.4)",
       },
     },
   },

@@ -1,37 +1,176 @@
 <script setup lang="ts">
-import logo from "@/assets/images/logo.svg";
+import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+import logo from "/logo.svg";
 
-const links = [
-  { label: "Home", href: "#home" },
-  { label: "Experience", href: "#experience" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
-];
+const { locale, t } = useI18n();
+
+const isOpen = ref(false);
+
+const changeLang = () => {
+  locale.value = locale.value === "es" ? "en" : "es";
+};
+
+const toggleMenu = () => {
+  isOpen.value = !isOpen.value;
+};
+
+const closeMenu = () => {
+  isOpen.value = false;
+};
+
+const scrollToSection = (id: string) => {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth" });
+  closeMenu();
+};
 </script>
 
 <template>
   <header
-    class="w-full bg-nav-bg/90 backdrop-blur-md py-4 px-6 flex items-center justify-between"
+    class="fixed top-0 left-0 w-full bg-nav-bg/90 backdrop-blur-xl z-50 border-b border-white/10 shadow-[0_0_15px_rgba(80,120,255,0.12)]"
   >
-    <!-- Logo -->
-    <div class="flex items-center gap-2">
-      <img
-        :src="logo"
-        alt="Logo Alvaro Prado"
-        class="h-10 w-auto md:h-12 flex-shrink-0"
-      />
-    </div>
+    <nav
+      class="max-w-6xl mx-auto flex items-center justify-between px-6 py-3 md:px-8"
+    >
+      <!-- Logo -->
+      <button class="flex items-center group" @click="scrollToSection('hero')">
+        <img :src="logo" alt="Logo Álvaro" class="w-14 h-auto object-contain" />
+      </button>
 
-    <!-- Nav links -->
-    <nav class="flex gap-8 text-sm font-medium">
-      <a
-        v-for="link in links"
-        :key="link.href"
-        :href="link.href"
-        class="text-white/70 hover:text-white transition-colors"
+      <!-- Desktop menu -->
+      <div class="hidden md:flex items-center gap-7 text-[15px]">
+        <button class="nav-item" @click="scrollToSection('hero')">
+          {{ t("navbar.home") }}
+        </button>
+        <button class="nav-item" @click="scrollToSection('experience')">
+          {{ t("navbar.experience") }}
+        </button>
+        <button class="nav-item" @click="scrollToSection('projects')">
+          {{ t("navbar.projects") }}
+        </button>
+        <button class="nav-item" @click="scrollToSection('tech')">
+          {{ t("navbar.tech") }}
+        </button>
+        <button class="nav-item" @click="scrollToSection('contact')">
+          {{ t("navbar.contact") }}
+        </button>
+
+        <button
+          @click="changeLang"
+          class="px-4 py-1 border border-white/30 rounded-md text-xs tracking-wide hover:bg-white/10 transition"
+        >
+          {{ locale === "es" ? t("navbar.langEn") : t("navbar.langEs") }}
+        </button>
+      </div>
+
+      <!-- Hamburguesa -->
+      <button
+        class="md:hidden flex flex-col justify-center items-center w-8 h-8 focus:outline-none"
+        @click="toggleMenu"
       >
-        {{ link.label }}
-      </a>
+        <span
+          class="block w-5 h-0.5 bg-white rounded-sm transition"
+          :class="{ 'rotate-45 translate-y-1.5': isOpen }"
+        />
+        <span
+          class="block w-5 h-0.5 bg-white rounded-sm my-1 transition"
+          :class="{ 'opacity-0': isOpen }"
+        />
+        <span
+          class="block w-5 h-0.5 bg-white rounded-sm transition"
+          :class="{ '-rotate-45 -translate-y-1.5': isOpen }"
+        />
+      </button>
     </nav>
+
+    <!-- MOBILE MENU -->
+    <transition name="menu-slide">
+      <div
+        v-if="isOpen"
+        class="md:hidden bg-nav-bg/98 border-t border-white/10"
+      >
+        <div
+          class="max-w-6xl mx-auto px-6 py-6 space-y-4 text-center text-base"
+        >
+          <button class="mobile-link" @click="scrollToSection('hero')">
+            {{ t("navbar.home") }}
+          </button>
+          <button class="mobile-link" @click="scrollToSection('experience')">
+            {{ t("navbar.experience") }}
+          </button>
+          <button class="mobile-link" @click="scrollToSection('projects')">
+            {{ t("navbar.projects") }}
+          </button>
+          <button class="mobile-link" @click="scrollToSection('tech')">
+            {{ t("navbar.tech") }}
+          </button>
+          <button class="mobile-link" @click="scrollToSection('contact')">
+            {{ t("navbar.contact") }}
+          </button>
+
+          <button
+            @click="changeLang"
+            class="mt-4 px-4 py-1 border border-white/30 rounded-md text-xs tracking-wide hover:bg-white/10 transition"
+          >
+            {{ locale === "es" ? t("navbar.langEn") : t("navbar.langEs") }}
+          </button>
+        </div>
+      </div>
+    </transition>
   </header>
 </template>
+
+<style scoped>
+.nav-item {
+  @apply text-white/80 hover:text-white transition cursor-pointer;
+  position: relative;
+}
+
+.nav-item::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #3b82f6;
+  transition: width 0.25s ease-out;
+}
+
+.nav-item:hover::after {
+  width: 100%;
+}
+
+.mobile-link {
+  @apply block text-white/80 hover:text-white transition;
+}
+
+/* MENU SLIDE ANIMATION */
+.menu-slide-enter-active {
+  animation: fadeDown 0.22s ease-out;
+}
+.menu-slide-leave-active {
+  animation: fadeUp 0.16s ease-out forwards;
+}
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+</style>

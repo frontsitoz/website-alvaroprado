@@ -1,144 +1,216 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import { useI18n } from "vue-i18n";
+import BaseContainer from "@/components/layout/BaseContainer.vue";
+import SocialLinks from "@/components/ui/SocialLinks.vue";
+import meAvatar from "@/assets/images/avatar.png";
 
-const phrases = [
-  "I build delightful user interfaces.",
-  "I work with Vue & TypeScript.",
-  "I create beautiful digital experiences.",
-];
+const { t, tm } = useI18n();
 
+/* efecto typing */
 const typedText = ref("");
-let phraseIndex = 0;
-let charIndex = 0;
-let timeoutId: number | undefined;
+const phraseIndex = ref(0);
+const charIndex = ref(0);
+const isDeleting = ref(false);
+let typingTimer: number | undefined;
 
-const getCurrentPhrase = () => {
-  return phrases[phraseIndex % phrases.length] ?? "";
-};
+const typedPhrases = computed(() => {
+  return tm("hero.typedPhrases") as string[];
+});
 
-const type = () => {
-  const phrase = getCurrentPhrase();
+const TYPE_SPEED = 60;
+const DELETE_SPEED = 35;
+const PAUSE_AT_END = 1800;
 
-  if (charIndex < phrase.length) {
-    typedText.value += phrase.charAt(charIndex);
-    charIndex++;
-    timeoutId = window.setTimeout(type, 70);
+const typeStep = () => {
+  const current = typedPhrases.value[phraseIndex.value];
+
+  if (!isDeleting.value) {
+    charIndex.value++;
+    typedText.value = current.slice(0, charIndex.value);
+
+    if (charIndex.value >= current.length) {
+      isDeleting.value = true;
+      typingTimer = window.setTimeout(typeStep, PAUSE_AT_END);
+      return;
+    }
   } else {
-    timeoutId = window.setTimeout(() => erase(), 1500);
-  }
-};
+    charIndex.value--;
+    typedText.value = current.slice(0, charIndex.value);
 
-const erase = () => {
-  if (charIndex > 0) {
-    typedText.value = typedText.value.slice(0, -1);
-    charIndex--;
-    timeoutId = window.setTimeout(erase, 40);
-  } else {
-    phraseIndex = (phraseIndex + 1) % phrases.length;
-    timeoutId = window.setTimeout(type, 300);
+    if (charIndex.value <= 0) {
+      isDeleting.value = false;
+      phraseIndex.value = (phraseIndex.value + 1) % typedPhrases.value.length;
+    }
   }
+
+  typingTimer = window.setTimeout(
+    typeStep,
+    isDeleting.value ? DELETE_SPEED : TYPE_SPEED
+  );
 };
 
 onMounted(() => {
-  type();
+  typingTimer = window.setTimeout(typeStep, TYPE_SPEED);
 });
 
 onUnmounted(() => {
-  if (timeoutId !== undefined) {
-    clearTimeout(timeoutId);
-  }
+  clearTimeout(typingTimer);
 });
+
+const scrollToSection = (id: string) => {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth" });
+};
 </script>
 
 <template>
-  <section
-    id="home"
-    class="w-full min-h-[80vh] flex items-center pt-28 md:pt-32 pb-20 px-6 md:px-10"
-  >
-    <div
-      class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center"
-    >
-      <!-- Columna izquierda: avatar + saludo -->
-      <div class="flex flex-col items-center md:items-start gap-6">
-        <!-- Avatar con box-shadow blanco -->
-        <div
-          class="rounded-full p-[6px] bg-[#12051f] shadow-[0_0_60px_rgba(255,255,255,0.6)]"
-        >
+  <section id="hero" class="min-h-[90vh] flex items-center pt-24 md:pt-32">
+    <BaseContainer>
+      <div
+        class="flex flex-col items-center text-center md:text-left md:items-start md:flex-row gap-12 md:gap-16 lg:gap-20"
+      >
+        <!-- AVATAR FIJO -->
+        <div class="hero-avatar-wrapper">
           <img
-            src="@/assets/images/avatar.png"
-            alt="Alvaro Prado"
-            class="w-52 h-52 md:w-60 md:h-60 rounded-full object-cover"
+            :src="meAvatar"
+            class="hero-avatar animate-fade"
+            alt="Alvaro avatar"
           />
         </div>
 
-        <!-- Texto de presentación -->
-        <div class="text-center md:text-left">
-          <p class="text-white/70 text-lg">Hello! I am</p>
-          <h1 class="text-4xl md:text-5xl font-bold text-purple-300 mt-1">
-            Alvaro Prado
+        <!-- TEXTOS -->
+        <div class="flex-1 max-w-xl">
+          <p class="text-lg md:text-xl mb-2 text-white/70 animate-fade">
+            {{ t("hero.hello") }}
+          </p>
+
+          <h1
+            class="text-4xl md:text-5xl lg:text-5xl font-semibold mb-1 animate-fade"
+          >
+            {{ t("hero.name") }}
           </h1>
-          <p class="text-white/60 mt-1 text-lg">A Frontend Developer who</p>
+
+          <p
+            class="text-2xl md:text-4xl font-semibold text-accent mb-5 leading-tight animate-fade"
+          >
+            {{ t("hero.role") }}
+          </p>
+
+          <!-- TYPING ESTABLE -->
+          <div class="typing-container text-lg md:text-2xl font-medium mb-6">
+            <span class="typing-text">{{ typedText }}</span>
+            <span class="cursor">|</span>
+          </div>
+
+          <SocialLinks />
+
+          <div
+            class="mt-6 flex flex-wrap gap-4 justify-center md:justify-start"
+          >
+            <button class="btn-primary" @click="scrollToSection('experience')">
+              {{ t("hero.scroll") }}
+            </button>
+
+            <a href="/cv-alvaro-prado.pdf" download class="btn-outline">
+              {{ t("hero.downloadCv") }}
+            </a>
+          </div>
         </div>
       </div>
 
-      <!-- Columna derecha: about + texto animado -->
-      <div id="about" class="flex flex-col gap-6">
-        <!-- Texto con efecto máquina de escribir -->
-        <h2
-          class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight min-h-[3.5rem] md:min-h-[4.5rem]"
+      <!-- FLECHA ↓ -->
+      <div class="mt-10 md:mt-16 flex justify-center">
+        <button
+          @click="scrollToSection('experience')"
+          class="arrow-bounce w-10 h-10 flex items-center justify-center rounded-full border border-white/20 text-white/70 hover:text-accent hover:border-accent transition"
         >
-          {{ typedText }}<span class="cursor">|</span>
-        </h2>
-
-        <!-- Descripción -->
-        <p class="text-white/70 leading-relaxed max-w-lg">
-          I design and build modern web interfaces using Vue.js, TypeScript and
-          Tailwind CSS, focusing on clean code and smooth user experiences.
-        </p>
-
-        <p class="text-white/70 leading-relaxed max-w-lg">
-          I enjoy creating delightful digital products that balance business
-          goals and user needs.
-        </p>
-
-        <!-- Botones CTA -->
-        <div class="flex flex-wrap gap-4 pt-4">
-          <a
-            href="/AlvaroPrado-CV.pdf"
-            target="_blank"
-            class="px-6 py-3 rounded-full bg-purple-600 text-white font-medium text-sm md:text-base hover:bg-purple-500 transition"
-          >
-            Download CV
-          </a>
-
-          <a
-            href="https://www.linkedin.com/in/alvaropradotenorio"
-            target="_blank"
-            class="px-6 py-3 rounded-full border border-white/25 text-white/80 text-sm md:text-base hover:bg-white/10 hover:text-white transition"
-          >
-            LinkedIn
-          </a>
-        </div>
+          ▼
+        </button>
       </div>
-    </div>
+    </BaseContainer>
   </section>
 </template>
 
 <style scoped>
+/* cursor */
 .cursor {
-  display: inline-block;
-  margin-left: 2px;
-  animation: blink 0.9s steps(1, start) infinite;
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
 }
 
-@keyframes blink {
-  0%,
-  50% {
-    opacity: 1;
-  }
-  50.01%,
-  100% {
+/* Avatar con halo */
+.hero-avatar-wrapper {
+  width: 260px;
+  height: 260px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+.animate-fade {
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
     opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-avatar {
+  width: 220px;
+  height: 220px;
+  border-radius: 999px;
+  object-fit: contain;
+  box-shadow: 0 0 18px rgba(110, 130, 255, 0.5),
+    0 0 45px rgba(80, 90, 230, 0.25), 0 0 90px rgba(50, 60, 180, 0.1);
+}
+
+/* typing SIN movimiento del layout */
+.typing-container {
+  min-height: 50px;
+  max-height: 50px;
+  overflow: hidden;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.typing-text {
+  display: inline;
+  white-space: normal;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* botones */
+.btn-primary {
+  @apply px-5 py-2.5 rounded-full bg-accent text-sm font-medium hover:bg-accent-soft transition;
+}
+.btn-outline {
+  @apply px-5 py-2.5 rounded-full border border-white/20 text-sm font-medium text-white/80 hover:border-accent hover:text-accent transition;
+}
+
+/* animación flecha */
+.arrow-bounce {
+  animation: bounce 1.6s infinite;
+}
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(7px);
   }
 }
 </style>
