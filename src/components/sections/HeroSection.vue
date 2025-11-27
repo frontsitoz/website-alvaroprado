@@ -122,14 +122,16 @@ const scrollToSection = (id: string) => {
             <span v-if="typedText.length" class="cursor"></span>
           </div>
 
-          <div class="social-links-wrapper">
-            <SocialLinks />
-          </div>
+          <div class="social-actions">
+            <div class="social-container">
+              <SocialLinks />
+            </div>
 
-          <div class="actions">
-            <a href="/cv-alvaro.pdf" download class="btn-outline">
-              {{ t("hero.downloadCv") }}
-            </a>
+            <div class="cv-button">
+              <a href="/cv-alvaro.pdf" download class="btn-outline">
+                {{ t("hero.downloadCv") }}
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -434,6 +436,35 @@ const scrollToSection = (id: string) => {
   }
   .hero {
     padding-top: 65px;
+  }
+}
+/******** SOCIAL + CV juntos *********/
+.social-actions {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 14px;
+  justify-content: start;
+  align-items: end;
+}
+
+/* que los iconos no se estiren */
+.social-container {
+  display: flex;
+}
+
+/* Ajuste del botón */
+.cv-button {
+  display: flex;
+}
+
+/************* MOBILE **************/
+@media (max-width: 768px) {
+  .social-actions {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
   }
 }
 </style>
