@@ -5,9 +5,9 @@ import BaseContainer from "@/components/layout/BaseContainer.vue";
 import SocialLinks from "@/components/ui/SocialLinks.vue";
 import meAvatar from "@/assets/images/avatar.png";
 
-const { t, tm } = useI18n({ useScope: "local" });
+const { t, tm } = useI18n();
 
-// typing
+// typing — estado
 const typedText = ref("");
 const typingState = ref({
   phraseIndex: 0,
@@ -15,18 +15,27 @@ const typingState = ref({
   deleting: false,
 });
 let typingTimer: number | undefined;
+
+// scroll / arrow
 let scrollHandler: (() => void) | null = null;
 const arrowVisible = ref(true);
 
-const typedPhrases = computed<string[]>(() => {
-  const result = tm("hero.typedPhrases");
-  return Array.isArray(result) ? result : [];
+// frases typing desde i18n
+const typedPhrases = computed((): string[] => {
+  return tm("hero.typedPhrases") as unknown as string[];
 });
 
 const TYPE_SPEED = 55;
 const DELETE_SPEED = 35;
 const PAUSE_AT_END = 1400;
 
+// ----------- REAL VH FIX PARA MÓVIL -----------
+const updateVH = () => {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty("--vh", `${vh}px`);
+};
+
+// typing engine
 const typeStep = () => {
   const phrases = typedPhrases.value;
   if (!phrases.length) return;
@@ -60,11 +69,15 @@ const typeStep = () => {
 };
 
 onMounted(() => {
+  updateVH();
+  window.addEventListener("resize", updateVH);
+
   typingTimer = window.setTimeout(typeStep, TYPE_SPEED);
 
   scrollHandler = () => {
     const heroEl = document.getElementById("hero");
     if (!heroEl) return;
+
     const heroHeight = heroEl.offsetHeight;
 
     arrowVisible.value = window.scrollY < heroHeight * 0.25;
@@ -86,8 +99,10 @@ onMounted(() => {
 onUnmounted(() => {
   if (typingTimer) clearTimeout(typingTimer);
   if (scrollHandler) window.removeEventListener("scroll", scrollHandler);
+  window.removeEventListener("resize", updateVH);
 });
 
+// scroll hacia sección experiencia
 const scrollToSection = (id: string) => {
   const el = document.getElementById(id);
   if (!el) return;
@@ -101,11 +116,11 @@ const scrollToSection = (id: string) => {
 <template>
   <section
     id="hero"
-    class="relative h-screen flex items-center justify-center pt-20 md:pt-24 lg:pt-28 overflow-hidden"
+    class="relative hero-viewport flex items-center justify-center pt-20 md:pt-24 lg:pt-28 overflow-hidden"
   >
     <BaseContainer>
       <div
-        class="flex flex-col md:flex-row items-center gap-10 md:gap-20 mt-[-40px]"
+        class="flex flex-col lg:flex-row items-center gap-10 lg:gap-20 mt-[-40px]"
       >
         <!-- AVATAR -->
         <div class="flex justify-center md:order-1">
@@ -113,7 +128,7 @@ const scrollToSection = (id: string) => {
             :src="meAvatar"
             alt="Avatar"
             loading="lazy"
-            class="w-52 h-52 lg:w-80 lg:h-80 object-contain rounded-full transition-transform duration-300 hover:scale-[1.03] drop-shadow-[0px_0px_30px_rgba(110,130,255,0.55)]"
+            class="w-72 h-72 /* móvil */ md:w-80 md:h-80 /* tablet / pantallas medianas */ [@media(min-width:880px)]:w-72 [@media(min-width:880px)]:h-72 /* personalizado */ lg:w-80 lg:h-80 /* desktop */ object-contain rounded-full transition-transform duration-300 hover:scale-[1.03] drop-shadow-[0px_0px_30px_rgba(110,130,255,0.55)]"
           />
         </div>
 
@@ -126,18 +141,18 @@ const scrollToSection = (id: string) => {
           </p>
 
           <h1
-            class="font-preah font-semibold text-white text-[2.8rem] md:text-[3.1rem] leading-tight mb-[-4px]"
+            class="font-preah font-semibold text-white text-[2.4rem] md:text-[3.1rem] leading-snug mb-[-4px]"
           >
             {{ t("hero.name") }}
           </h1>
 
           <p
-            class="font-preah font-semibold text-[2rem] md:text-[2.4rem] text-[#6ba4ff] mb-4"
+            class="font-preah font-semibold text-[1.8rem] md:text-[2.4rem] text-[#6ba4ff] mb-4"
           >
             {{ t("hero.role") }}
           </p>
 
-          <!-- TEXTO TYPING ESTABLE -->
+          <!-- TEXTO TYPING -->
           <div
             class="font-preah text-white/90 text-[1.28rem] md:text-[1.45rem] leading-tight whitespace-normal min-h-[75px] md:min-h-[95px]"
           >
@@ -148,9 +163,9 @@ const scrollToSection = (id: string) => {
             ></span>
           </div>
 
-          <!-- SOCIAL + CV -->
+          <!-- REDES + CV -->
           <div
-            class="flex flex-col md:flex-row md:items-end md:justify-start items-center gap-4 mt-4"
+            class="flex flex-col md:flex-row md:items-end md:justify-start items-center gap-4"
           >
             <SocialLinks />
             <a
@@ -171,7 +186,7 @@ const scrollToSection = (id: string) => {
       v-show="arrowVisible"
       class="arrow"
     >
-      <i class="fa-solid fa-arrow-down"></i>
+      <i class="fa-solid fa-angle-down"></i>
     </button>
   </section>
 </template>
@@ -186,6 +201,12 @@ const scrollToSection = (id: string) => {
     transform: translateX(-50%) translateY(7px);
   }
 }
+
+.hero-viewport {
+  height: calc(var(--vh) * 100); /* 👈 ahora es ALTURA REAL */
+}
+
+/* flecha */
 .hide-arrow {
   opacity: 0;
   pointer-events: none;
@@ -213,21 +234,21 @@ const scrollToSection = (id: string) => {
 /* móvil */
 @media (max-width: 540px) {
   .arrow {
-    bottom: 55px;
+    bottom: 60px; /* ← ajustado para barra inferior Android */
   }
 }
 
 /* tablet */
 @media (min-width: 541px) {
   .arrow {
-    bottom: 75px;
+    bottom: 40px;
   }
 }
 
 /* desktop */
 @media (min-width: 1024px) {
   .arrow {
-    bottom: 75px;
+    bottom: 90px;
   }
 }
 </style>

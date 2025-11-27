@@ -10,13 +10,13 @@ const links = [
 </script>
 
 <template>
-  <div class="flex gap-4 text-xl mt-4">
+  <div class="flex gap-4 text-2xl mt-4">
     <a
       v-for="item in links"
       :key="item.url"
       :href="item.url"
       target="_blank"
-      class="w-9 h-9 flex items-center justify-center rounded-full border border-white/20 text-white/60 hover:text-accent hover:border-accent transition"
+      class="w-12 h-12 flex items-center justify-center rounded-full border border-white/20 text-white/60 hover:text-accent hover:border-accent transition"
     >
       <i :class="item.icon"></i>
     </a>
