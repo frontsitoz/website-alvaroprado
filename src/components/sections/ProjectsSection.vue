@@ -1,10 +1,27 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
+
 import BaseContainer from "@/components/layout/BaseContainer.vue";
 import andeswarmiFull from "../../assets/projects/page-andeswarmi.png";
 
-const { t } = useI18n();
+type ProjectItem = {
+  slug: string;
+  title: string;
+  role: string;
+  subtitle: string;
+  description: string;
+  level: string;
+  tags: string[];
+  link: string;
+};
+const { t, tm } = useI18n();
+
+// ✅ Trae el array como objeto (no string) y tipado
+const project = computed(() => {
+  const items = tm("projects.items") as ProjectItem[];
+  return items[0];
+});
 
 // detecta cuando aparece en viewport 👇
 const visible = ref(false);
@@ -63,18 +80,21 @@ onMounted(() => {
           <p class="text-[11px] uppercase tracking-[0.25em] text-white/50">
             {{ t("projects.label") }}
           </p>
-          <h3 class="text-3xl font-semibold text-accent">AndesWarmi</h3>
+          <h3 class="text-3xl font-semibold text-accent">
+            {{ project?.title }}
+          </h3>
           <p class="text-base text-white/70 leading-relaxed">
-            {{ t("projects.items.0.description") }}
+            {{ project?.description }}
           </p>
 
           <p class="text-sm text-white/60 tracking-wide">
-            {{ t("projects.items.0.role") }}
+            {{ project?.role }}
           </p>
 
           <a
-            href="https://github.com/frontsitoz/andeswarmi"
+            :href="project?.link"
             target="_blank"
+            rel="noopener noreferrer"
             class="project-btn inline-block px-5 py-2.5 rounded-full text-sm font-medium transition"
           >
             {{ t("projects.cta") }}

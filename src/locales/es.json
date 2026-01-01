@@ -58,12 +58,20 @@
       {
         "slug": "andeswarmi",
         "title": "AndesWarmi",
-        "subtitle": "Tienda de alpaca y vicuña",
-        "description": "Concepto de e-commerce construido con Angular para la venta de prendas de alpaca y vicuña con una UI limpia y moderna.",
-        "role": "Angular · TypeScript · Tailwind CSS",
-        "level": "Intermedio",
-        "tags": ["Angular", "TypeScript", "Tailwind CSS", "E-commerce"],
-        "link": "https://github.com/frontsitoz/andeswarmi"
+        "role": "Frontend (Angular) · Integración API · Arquitectura serverless (AWS)",
+        "subtitle": "E-commerce serverless con AWS (Proyecto académico)",
+        "description": "Proyecto académico de e-commerce con arquitectura serverless. Frontend en Angular integrado a AWS API Gateway y funciones Lambda para el consumo de datos desde SQL Server en RDS.",
+        "level": "Proyecto académico",
+        "tags": [
+          "Angular",
+          "TypeScript",
+          "Tailwind CSS",
+          "AWS Lambda",
+          "API Gateway",
+          "SQL Server",
+          "Serverless"
+        ],
+        "link": "https://andeswarmi.netlify.app/"
       }
     ],
     "cta": "Ir al proyecto"
