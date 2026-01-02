@@ -1,11 +1,21 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import BaseContainer from "@/components/layout/BaseContainer.vue";
 
-const { t } = useI18n();
+const { t, tm } = useI18n();
 
 const visible = ref(false);
+
+type Contact = {
+  title: string;
+  intro: string;
+  cta: string;
+  url: string;
+  email: string;
+};
+
+const contact = computed(() => tm("contact") as Contact);
 
 onMounted(() => {
   const observer = new IntersectionObserver(
@@ -42,28 +52,28 @@ onMounted(() => {
           {{ t("contact.intro") }}
         </p>
 
-        <a href="mailto:alvarojpt04.ws@gmail.com" class="contact-btn">
+        <!-- Botón principal (WhatsApp) -->
+        <a
+          :href="contact.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="contact-btn border border-accent text-accent hover:text-dark transition px-6 py-3 rounded-md font-medium"
+        >
           {{ t("contact.cta") }}
         </a>
+
+        <!-- Link secundario (Email) -->
+        <div class="mt-9">
+          <a
+            :href="`https://mail.google.com/mail/?view=cm&fs=1&to=${contact.email}`"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-white/60 hover:text-accent transition text-sm border-b border-white/20 hover:border-accent"
+          >
+            o escríbeme por correo
+          </a>
+        </div>
       </div>
     </BaseContainer>
   </section>
 </template>
-
-<style scoped>
-.contact-btn {
-  @apply px-6 py-3 rounded-full text-base font-medium transition;
-  background: rgba(120, 160, 255, 0.22);
-  border: 1px solid rgba(120, 160, 255, 0.35);
-  color: white;
-  box-shadow: 0 0 12px rgba(120, 160, 255, 0.18);
-  backdrop-filter: blur(6px);
-  cursor: pointer;
-}
-.contact-btn:hover {
-  background: rgba(140, 200, 255, 0.32);
-  border-color: rgba(200, 230, 255, 0.9);
-  box-shadow: 0 0 20px rgba(120, 160, 255, 0.38);
-  transform: translateY(-2px);
-}
-</style>

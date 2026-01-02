@@ -17,7 +17,7 @@ type ProjectItem = {
 };
 const { t, tm } = useI18n();
 
-// ✅ Trae el array como objeto (no string) y tipado
+//  Trae el array como objeto (no string) y tipado
 const project = computed(() => {
   const items = tm("projects.items") as ProjectItem[];
   return items[0];

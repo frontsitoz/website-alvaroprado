@@ -81,13 +81,13 @@
     "title": "Stack tecnológico",
     "description": "Estas son las principales tecnologías que utilizo para construir interfaces modernas, rápidas y mantenibles."
   },
-
   "contact": {
     "title": "Contacto",
     "intro": "¿Te gustaría que trabajemos juntos o simplemente saludar?",
-    "cta": "Enviarme un correo"
+    "cta": "Escríbeme por WhatsApp",
+    "url": "https://wa.me/51937107646?text=Hola%20Álvaro,%20vi%20tu%20portafolio%20y%20quisiera%20contactarte.",
+    "email": "alvarojpt04.ws@gmail.com"
   },
-
   "footer": {
     "rights": "Todos los derechos reservados.",
     "builtWith": "Desarrollado con Vue 3, TypeScript y Tailwind CSS."

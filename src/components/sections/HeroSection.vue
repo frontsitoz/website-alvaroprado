@@ -7,6 +7,9 @@ import meAvatar from "@/assets/images/avatar.png";
 
 const { t, tm } = useI18n();
 
+// URL pública del CV (soporta base path en build/deploy)
+const pdfUrl = import.meta.env.BASE_URL + "plantillaCV-alvaro.pdf";
+
 // typing — estado
 const typedText = ref("");
 const typingState = ref({
@@ -169,7 +172,7 @@ const scrollToSection = (id: string) => {
           >
             <SocialLinks />
             <a
-              href="/cv-alvaro.pdf"
+              :href="pdfUrl"
               download
               class="px-6 py-2.5 rounded-full border text-[0.9rem] border-blue-300/85 text-blue-300/85 hover:text-blue-300 hover:border-blue-300 hover:shadow-[0px_0px_10px_rgba(107,163,255,0.35)] transition font-medium"
             >

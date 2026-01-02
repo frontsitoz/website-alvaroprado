@@ -58,17 +58,24 @@
       {
         "slug": "andeswarmi",
         "title": "AndesWarmi",
-        "subtitle": "Alpaca & vicuña store",
-        "description": "E-commerce concept built with Angular for selling alpaca and vicuña garments with a clean and modern UI.",
-        "role": "Angular · TypeScript · Tailwind CSS",
-        "level": "Intermediate",
-        "tags": ["Angular", "TypeScript", "Tailwind CSS", "E-commerce"],
-        "link": "https://github.com/frontsitoz/andeswarmi"
+        "subtitle": "Serverless e-commerce with AWS (Academic project)",
+        "description": "Academic e-commerce project built with a serverless architecture. Frontend developed in Angular and integrated with AWS API Gateway and Lambda functions to consume data from SQL Server on RDS.",
+        "role": "Frontend (Angular) · API Integration · Serverless Architecture (AWS)",
+        "level": "Academic project",
+        "tags": [
+          "Angular",
+          "TypeScript",
+          "Tailwind CSS",
+          "AWS Lambda",
+          "API Gateway",
+          "SQL Server",
+          "Serverless"
+        ],
+        "link": "https://andeswarmi.netlify.app/"
       }
     ],
-    "cta": "Open project"
+    "cta": "View project"
   },
-
   "tech": {
     "title": "Tech stack",
     "description": "These are the main technologies I use to build modern, fast and maintainable interfaces."
