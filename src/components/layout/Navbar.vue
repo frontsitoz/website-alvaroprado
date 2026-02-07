@@ -35,7 +35,7 @@ const scrollToSection = (id: string) => {
         <img
           :src="logo"
           alt="Logo Álvaro"
-          class="w-[65px] h-auto object-contain"
+          class="w-[65px] h-auto object-contain shadow-[0_6px_20px_rgba(0,0,0,0.35)]"
         />
       </button>
 

@@ -3,7 +3,9 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 import BaseContainer from "@/components/layout/BaseContainer.vue";
 import SocialLinks from "@/components/ui/SocialLinks.vue";
-import meAvatar from "@/assets/images/avatar.png";
+import avatar320 from "@/assets/images/avatar-320.webp";
+import avatar512 from "@/assets/images/avatar-512.webp";
+import avatar768 from "@/assets/images/avatar-768.webp";
 
 const { t, tm } = useI18n();
 
@@ -67,7 +69,7 @@ const typeStep = () => {
 
   typingTimer = window.setTimeout(
     typeStep,
-    state.deleting ? DELETE_SPEED : TYPE_SPEED
+    state.deleting ? DELETE_SPEED : TYPE_SPEED,
   );
 };
 
@@ -119,7 +121,7 @@ const scrollToSection = (id: string) => {
 <template>
   <section
     id="hero"
-    class="relative hero-viewport flex items-center justify-center pt-20 md:pt-24 lg:pt-28 overflow-hidden"
+    class="relative hero-viewport flex items-center justify-center pt-20 md:pt-24 lg:pt-28 overflow-visible"
   >
     <BaseContainer>
       <div
@@ -128,10 +130,16 @@ const scrollToSection = (id: string) => {
         <!-- AVATAR -->
         <div class="flex justify-center md:order-1">
           <img
-            :src="meAvatar"
-            alt="Avatar"
-            loading="lazy"
-            class="w-72 h-72 /* móvil */ md:w-80 md:h-80 /* tablet / pantallas medianas */ [@media(min-width:880px)]:w-72 [@media(min-width:880px)]:h-72 /* personalizado */ lg:w-80 lg:h-80 /* desktop */ object-contain rounded-full transition-transform duration-300 hover:scale-[1.03] drop-shadow-[0px_0px_30px_rgba(110,130,255,0.55)]"
+            :src="avatar512"
+            :srcset="`${avatar320} 320w, ${avatar512} 512w, ${avatar768} 768w`"
+            sizes="(min-width: 1024px) 320px, (min-width: 768px) 280px, 240px"
+            alt="Avatar de Álvaro Prado"
+            width="320"
+            height="320"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            class="w-72 h-72 md:w-80 md:h-80 object-contain rounded-full shadow-[0_8px_30px_rgba(0,0,0,0.45)] z-10 ring-2 ring-black/20"
           />
         </div>
 

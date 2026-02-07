@@ -3,7 +3,9 @@ import { useI18n } from "vue-i18n";
 import { ref, onMounted, computed } from "vue";
 
 import BaseContainer from "@/components/layout/BaseContainer.vue";
-import andeswarmiFull from "../../assets/projects/page-andeswarmi.png";
+import andes400 from "@/assets/projects/page-andeswarmi@400.webp";
+import andes800 from "@/assets/projects/page-andeswarmi@800.webp";
+import andes1600 from "@/assets/projects/page-andeswarmi@1600.webp";
 
 type ProjectItem = {
   slug: string;
@@ -34,7 +36,7 @@ onMounted(() => {
         observer.disconnect();
       }
     },
-    { threshold: 0.15 }
+    { threshold: 0.15 },
   );
 
   const section = document.getElementById("projects");
@@ -64,7 +66,11 @@ onMounted(() => {
             class="h-[460px] overflow-y-auto overflow-x-hidden rounded-2xl border border-white/10 scrollbar-hide"
           >
             <img
-              :src="andeswarmiFull"
+              :src="andes800"
+              :srcset="`${andes400} 400w, ${andes800} 800w, ${andes1600} 1600w`"
+              sizes="(min-width: 1024px) 520px, 90vw"
+              loading="lazy"
+              decoding="async"
               class="w-full transition-transform duration-700 group-hover:scale-105"
               alt="AndesWarmi website preview"
             />

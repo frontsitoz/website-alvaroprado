@@ -3,7 +3,8 @@ import { useI18n } from "vue-i18n";
 import { ref, onMounted, computed } from "vue";
 import BaseContainer from "@/components/layout/BaseContainer.vue";
 import umatecLogo from "../../assets/logos/umatec.png";
-import avatarLogo from "../../assets/images/avatar.png";
+
+import avatar512 from "@/assets/images/avatar-512.webp";
 
 const { t, tm } = useI18n();
 
@@ -17,7 +18,7 @@ onMounted(() => {
         observer.disconnect();
       }
     },
-    { threshold: 0.18 }
+    { threshold: 0.18 },
   );
 
   const section = document.getElementById("experience");
@@ -32,7 +33,7 @@ const jobs = computed(() => tm("experience.jobs") as any[]);
 
 const getLogo = (key: string) => {
   if (key === "umatec") return umatecLogo;
-  return avatarLogo;
+  return avatar512; // fallback genérico
 };
 </script>
 
@@ -56,7 +57,7 @@ const getLogo = (key: string) => {
         <div class="flex items-start gap-4">
           <img
             :src="getLogo(job.key)"
-            class="w-12 h-12 object-cover rounded-md border border-white/10 transition-transform duration-300 group-hover:scale-[1.06]"
+            class="w-12 h-12 object-cover rounded-md border border-white/10 transition-transform duration-300 group-hover:scale-[1.06] shadow-[0_6px_20px_rgba(0,0,0,0.35)]"
           />
 
           <div class="flex-1 group-hover:translate-x-[4px] transition-all">
